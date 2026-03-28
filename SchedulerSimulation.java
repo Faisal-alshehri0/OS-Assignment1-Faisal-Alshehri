@@ -30,14 +30,17 @@ class Process implements Runnable {
     private int timeQuantum; // Time slice (time quantum) allowed per CPU access (in milliseconds)
     private int remainingTime; // Time left for the process to finish its execution
     private int priority; // feature 1 : Added priority field to the process
-    // Constructor to initialize the process with name, burst time, and time quantum
+    private long lastExecutionTime; // Feature 3: Waiting Time
+    private long waitingTime = 0;
 
+    // Constructor to initialize the process with name, burst time, and time quantum
     public Process(String name, int burstTime, int timeQuantum, int priority) {
         this.name = name;
         this.burstTime = burstTime;
         this.timeQuantum = timeQuantum;
         this.remainingTime = burstTime; // Initially, remaining time is equal to the burst time
         this.priority = priority;
+        this.lastExecutionTime = System.currentTimeMillis();
     }
 
     // This method will be called when the thread for this process is started
@@ -46,6 +49,8 @@ class Process implements Runnable {
         // Simulate running for either the time quantum or remaining time, whichever is
         // smaller
         int runTime = Math.min(timeQuantum, remainingTime); // Run for the smaller of the two times
+        long now = System.currentTimeMillis();
+        waitingTime += now - lastExecutionTime; // Update waiting time based on the last execution time
 
         // Show quantum execution starting
         String quantumBar = createProgressBar(0, 15);
@@ -93,6 +98,7 @@ class Process implements Runnable {
                     Colors.RESET);
         }
         System.out.println();
+        lastExecutionTime = System.currentTimeMillis(); // Update last execution time for waiting time calculation
     }
 
     // Helper method to create a visual progress bar
@@ -147,6 +153,10 @@ class Process implements Runnable {
 
     public int getPriority() {
         return priority;
+    }
+
+    public long getWaitingTime() {
+        return waitingTime;
     }
 }
 
@@ -292,6 +302,15 @@ public class SchedulerSimulation {
                 "╚════════════════════════════════════════════════════════════════════════════════╝" +
                 Colors.RESET + "\n");
         System.out.println("Total context switches: " + contextSwitches);
+
+        System.out.println("Waiting Time Summary");
+        for (Process p : processMap.values()) {
+            System.out.println(
+                    p.getName() +
+                            " | Burst: " + p.getBurstTime() +
+                            " | Waiting: " + p.getWaitingTime() + " ms");
+        }
+
     }
 
     // Method to add a process to the queue and map, while printing a "ready"
