@@ -8,32 +8,34 @@ Answer the following questions about your learning experience. Each answer shoul
 ## Question 1: What did you learn about multithreading?
 
 **Your Answer:**
-
-[Write your answer here. Discuss specific concepts like thread creation, thread states, how threads execute concurrently, what surprised you, etc.]
-
+Thread Lifecycle
+Scheduling & Time Slicing
+Concurrency
 ---
 
 ## Question 2: What was the most challenging part of this assignment?
 
 **Your Answer:**
 
-[Describe the specific challenge. Was it understanding the code? Implementing a feature? Using Git? Explain what made it difficult and how it relates to the course concepts.]
-
+Accurate Waiting Time Calculation: 
+You have to track the time from when a process enters the queue until it actually starts executing.
+Every time a process is preempted (yields the CPU), the "clock" for its waiting time starts again.
+Mapping these timestamps (System.currentTimeMillis()) across multiple execution bursts requires careful logic to avoid overlapping the "burst time" with the "waiting time."
 ---
 
 ## Question 3: How did you overcome the challenges you faced?
 
 **Your Answer:**
-
-[Describe your problem-solving approach. Did you read documentation? Ask for help? Debug systematically? What resources did you use? What strategies worked?]
-
+- Leveraging YouTube
+- utilizing AI as a Technical Mentor
+- Experimentation
 ---
 
 ## Question 4: How can you apply multithreading concepts in real-world applications?
 
 **Your Answer:**
 
-[Give specific examples from real applications you use (web browsers, games, mobile apps, etc.). Explain why threads are useful in those scenarios. Connect to what you learned in this assignment.]
+Web Browsers like google chrome
 
 ---
 
@@ -54,5 +56,4 @@ Answer the following questions about your learning experience. Each answer shoul
 ---
 
 ### Feedback on the assignment
-
-[Any comments about the assignment? Was it helpful? Too easy/hard? Suggestions for improvement?]
+it was helpful and too hard for real but i enjoy it
